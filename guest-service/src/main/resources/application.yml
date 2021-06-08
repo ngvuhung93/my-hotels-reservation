@@ -1,0 +1,17 @@
+server:
+  port: ${SERVER_PORT}
+
+spring:
+  application:
+    name: guest-service
+  datasource:
+    url: ${POSTGRES_URL}
+    username: ${POSTGRES_USERNAME}
+    password: ${POSTGRES_PASSWORD}
+  profiles:
+    active: local
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_URL}

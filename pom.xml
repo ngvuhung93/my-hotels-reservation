@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.epam.hotelreservation</groupId>
+    <artifactId>my-hotels-reservation</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <name>my-hotels-reservation-project</name>
+    <modules>
+        <module>api-gateway</module>
+        <module>authentication-service</module>
+        <module>config-service</module>
+        <module>hotel-service</module>
+        <module>payment-service</module>
+        <module>reservation-service</module>
+        <module>guest-service</module>
+        <module>eureka-server</module>
+    </modules>
+</project>

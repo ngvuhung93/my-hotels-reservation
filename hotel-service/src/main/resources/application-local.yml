@@ -1,0 +1,50 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: hotel-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/hotel
+    username: postgres
+    password: root
+  zipkin:
+    base-url: http://localhost:9411/
+#  jpa:
+#    hibernate:
+#      ddl-auto: create-drop
+
+resilience4j:
+  circuitbreaker:
+    configs:
+      default:
+        registerHealthIndicator: true
+        slidingWindowSize: 10
+        minimumNumberOfCalls: 5
+        permittedNumberOfCallsInHalfOpenState: 3
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        waitDurationInOpenState: 5s
+        failureRateThreshold: 50
+        eventConsumerBufferSize: 10
+        recordExceptions:
+          - org.springframework.web.client.HttpServerErrorException
+          - java.util.concurrent.TimeoutException
+          - java.io.IOException
+          - java.lang.IllegalStateException
+    instances:
+      searchHotelBreak:
+        baseConfig: default
+
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    hostname: localhost
+
+api:
+  service:
+    reservation:
+      name: reservation-service
+      path: /reservations

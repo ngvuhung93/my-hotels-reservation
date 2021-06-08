@@ -1,0 +1,26 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: guest-service
+  zipkin:
+    base-url: http://localhost:9411/
+  datasource:
+    url: jdbc:postgresql://localhost:5432/guest
+    username: postgres
+    password: root
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+
+  springdoc:
+    api-docs:
+      path: /api-docs
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    hostname: localhost
