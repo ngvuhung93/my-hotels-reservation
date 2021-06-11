@@ -1,6 +1,6 @@
 package com.epam.hotelreservation.reservationservice.model;
 
-import com.epam.hotelreservation.reservationservice.enums.ReservationStatus;
+import enums.ReservationStatus;
 import java.time.LocalDate;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;

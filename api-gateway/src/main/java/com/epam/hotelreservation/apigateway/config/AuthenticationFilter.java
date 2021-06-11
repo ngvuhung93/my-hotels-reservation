@@ -16,16 +16,17 @@ import reactor.core.publisher.Mono;
 @Component
 public class AuthenticationFilter implements GatewayFilter {
 
-    @Autowired
-    private RouterValidator routerValidator;
-    @Autowired
-    private JwtUtil jwtUtil;
+    private final JwtUtil jwtUtil;
+
+    public AuthenticationFilter(JwtUtil jwtUtil) {
+        this.jwtUtil = jwtUtil;
+    }
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         ServerHttpRequest request = exchange.getRequest();
 
-        if (routerValidator.isSecured.test(request)) {
+        if (RouterValidator.isSecured.test(request)) {
             if (this.isAuthMissing(request))
                 return this.onError(exchange, "Authorization header is missing in request", HttpStatus.UNAUTHORIZED);
 
@@ -38,9 +39,6 @@ public class AuthenticationFilter implements GatewayFilter {
         }
         return chain.filter(exchange);
     }
-
-
-    /*PRIVATE*/
 
     private Mono<Void> onError(ServerWebExchange exchange, String err, HttpStatus httpStatus) {
         ServerHttpResponse response = exchange.getResponse();

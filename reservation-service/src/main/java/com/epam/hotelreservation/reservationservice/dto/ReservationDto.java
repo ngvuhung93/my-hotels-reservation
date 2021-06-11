@@ -1,8 +1,8 @@
 package com.epam.hotelreservation.reservationservice.dto;
 
 import com.epam.hotelreservation.reservationservice.constant.ReservationServiceConstant;
-import com.epam.hotelreservation.reservationservice.enums.ReservationStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import enums.ReservationStatus;
 import java.time.LocalDate;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -6,7 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
-import org.axonframework.commandhandling.TargetAggregateIdentifier;
+import org.axonframework.modelling.command.TargetAggregateIdentifier;
+
 
 @Data
 @Builder

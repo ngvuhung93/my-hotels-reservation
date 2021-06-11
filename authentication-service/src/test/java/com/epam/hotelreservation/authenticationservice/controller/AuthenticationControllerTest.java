@@ -23,7 +23,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 @ExtendWith(MockitoExtension.class)
-@WebMvcTest(AuthController.class)
+@WebMvcTest(AuthControllerImpl.class)
 class AuthenticationControllerTest {
 
   @Autowired

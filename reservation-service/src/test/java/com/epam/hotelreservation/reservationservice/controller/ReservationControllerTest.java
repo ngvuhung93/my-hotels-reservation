@@ -11,13 +11,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.epam.hotelreservation.reservationservice.constant.ReservationServiceConstant;
 import com.epam.hotelreservation.reservationservice.dto.ReservationDto;
-import com.epam.hotelreservation.reservationservice.enums.ReservationStatus;
 import com.epam.hotelreservation.reservationservice.exception.ReservationErrorResponse;
 import com.epam.hotelreservation.reservationservice.exception.ReservationExceptionConverter;
 import com.epam.hotelreservation.reservationservice.exception.ReservationServiceException;
 import com.epam.hotelreservation.reservationservice.request.CreateReservationRequest;
 import com.epam.hotelreservation.reservationservice.service.ReservationService;
 import com.epam.hotelreservation.reservationservice.utility.TestUtility;
+import enums.ReservationStatus;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -84,7 +84,8 @@ class ReservationControllerTest {
     var mockCreateRequest = initMockCreateRequest();
 
     when(reservationService.createReservation(mockCreateRequest)).thenReturn(mockReservation);
-    mvc.perform(post(ReservationServiceConstant.RESERVATION_SERVICE_URL).contentType(MediaType.APPLICATION_JSON)
+    mvc.perform(post(ReservationServiceConstant.RESERVATION_SERVICE_URL)
+        .contentType(MediaType.APPLICATION_JSON)
         .content(TestUtility.asJsonString(mockCreateRequest)))
         .andDo(print())
         .andExpect(status().isOk())
@@ -93,18 +94,20 @@ class ReservationControllerTest {
   }
 
   @Test
-  void testReservationConflictWithGivenDates_SuccessCase() throws Exception{
+  void testReservationConflictWithGivenDates_SuccessCase() throws Exception {
     var reservations = new ArrayList<ReservationDto>();
     var mockReservation1 = initMockReservation();
     var mockReservation2 = initMockReservation();
     reservations.add(mockReservation1);
     reservations.add(mockReservation2);
 
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern(ReservationServiceConstant.DATE_FORMAT_PATTERN);
+    DateTimeFormatter formatter = DateTimeFormatter
+        .ofPattern(ReservationServiceConstant.DATE_FORMAT_PATTERN);
     var arrivalDate = today;
     var departureDate = today.plusDays(3);
 
-    when(reservationService.findReservationConflictWithGivenDates(arrivalDate, departureDate,CITY)).thenReturn(reservations);
+    when(reservationService.findReservationConflictWithGivenDates(arrivalDate, departureDate, CITY))
+        .thenReturn(reservations);
     mvc.perform(get(ReservationServiceConstant.RESERVATION_SERVICE_URL + "/booked")
         .param("arrivalDate", arrivalDate.format(formatter))
         .param("departureDate", departureDate.format(formatter))
@@ -113,17 +116,19 @@ class ReservationControllerTest {
         .andDo(print())
         .andExpect(status().isOk())
         .andExpect(content().string(TestUtility.asJsonString(reservations)));
-    verify(reservationService, times(1)).findReservationConflictWithGivenDates(arrivalDate,departureDate,CITY);
+    verify(reservationService, times(1))
+        .findReservationConflictWithGivenDates(arrivalDate, departureDate, CITY);
   }
 
   @Test
   void testReservationConflictWithGivenDates_FailedCase() throws Exception {
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern(ReservationServiceConstant.DATE_FORMAT_PATTERN);
+    DateTimeFormatter formatter = DateTimeFormatter
+        .ofPattern(ReservationServiceConstant.DATE_FORMAT_PATTERN);
 
     var arrivalDate = today;
     var departureDate = today.plusDays(3);
 
-    when(reservationService.findReservationConflictWithGivenDates(arrivalDate, departureDate,CITY))
+    when(reservationService.findReservationConflictWithGivenDates(arrivalDate, departureDate, CITY))
         .thenThrow(new ReservationServiceException(
             ReservationErrorResponse.INVALID_TIME_FRAME_EXCEPTION));
     var converter = new ReservationExceptionConverter();
@@ -140,7 +145,8 @@ class ReservationControllerTest {
         .andExpect(status().isBadRequest())
         .andExpect(content().string(jsonStringResponse));
 
-    verify(reservationService, times(1)).findReservationConflictWithGivenDates(arrivalDate, departureDate, CITY);
+    verify(reservationService, times(1))
+        .findReservationConflictWithGivenDates(arrivalDate, departureDate, CITY);
   }
 
   private ReservationDto initMockReservation() {

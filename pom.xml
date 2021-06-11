@@ -16,5 +16,7 @@
         <module>reservation-service</module>
         <module>guest-service</module>
         <module>eureka-server</module>
+        <module>report-service</module>
+        <module>saga-apis</module>
     </modules>
 </project>

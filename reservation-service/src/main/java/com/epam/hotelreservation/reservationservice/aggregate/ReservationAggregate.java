@@ -1,22 +1,24 @@
 package com.epam.hotelreservation.reservationservice.aggregate;
 
-import static org.axonframework.commandhandling.model.AggregateLifecycle.apply;
+import static org.axonframework.modelling.command.AggregateLifecycle.apply;
 
-import com.epam.hotelreservation.reservationservice.command.ReservationCreateCommand;
 import com.epam.hotelreservation.reservationservice.command.ReservationUpdateTimeFrameCommand;
-import com.epam.hotelreservation.reservationservice.enums.ReservationStatus;
-import com.epam.hotelreservation.reservationservice.event.ReservationCreatedEvent;
 import com.epam.hotelreservation.reservationservice.event.ReservationUpdatedTimeFrameEvent;
+import command.ReservationCreateCommand;
+import enums.ReservationStatus;
+import event.ReservationCreatedEvent;
 import java.time.LocalDate;
 import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.axonframework.commandhandling.CommandHandler;
-import org.axonframework.commandhandling.model.AggregateIdentifier;
 import org.axonframework.eventsourcing.EventSourcingHandler;
+import org.axonframework.modelling.command.AggregateIdentifier;
 import org.axonframework.spring.stereotype.Aggregate;
 
 @Aggregate
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@NoArgsConstructor
 public class ReservationAggregate {
 
   @AggregateIdentifier
@@ -27,9 +29,6 @@ public class ReservationAggregate {
   LocalDate bookedFrom;
   LocalDate bookedTo;
   ReservationStatus reservationStatus;
-
-  private ReservationAggregate() {
-  }
 
   @CommandHandler
   public ReservationAggregate(ReservationCreateCommand reservationCreateCommand) {

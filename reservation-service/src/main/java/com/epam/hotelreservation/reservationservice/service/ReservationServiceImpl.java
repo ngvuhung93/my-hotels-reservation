@@ -1,9 +1,7 @@
 package com.epam.hotelreservation.reservationservice.service;
 
-import com.epam.hotelreservation.reservationservice.command.ReservationCreateCommand;
 import com.epam.hotelreservation.reservationservice.command.ReservationUpdateTimeFrameCommand;
 import com.epam.hotelreservation.reservationservice.dto.ReservationDto;
-import com.epam.hotelreservation.reservationservice.enums.ReservationStatus;
 import com.epam.hotelreservation.reservationservice.exception.ReservationErrorResponse;
 import com.epam.hotelreservation.reservationservice.exception.ReservationServiceException;
 import com.epam.hotelreservation.reservationservice.mapper.MapStructMapper;
@@ -11,6 +9,8 @@ import com.epam.hotelreservation.reservationservice.model.Reservation;
 import com.epam.hotelreservation.reservationservice.repository.ReservationRepository;
 import com.epam.hotelreservation.reservationservice.request.CreateReservationRequest;
 import com.epam.hotelreservation.reservationservice.request.UpdateReservationTimeFrameRequest;
+import command.ReservationCreateCommand;
+import enums.ReservationStatus;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;

@@ -28,8 +28,7 @@ public class AuthenticationServiceImpl implements AuthenticationService{
   private final RestTemplate restTemplate;
   private final JwtUtil jwt;
 
-  //@Value("${api.guest-service.url}")
-  private String url = "http://guest-service/guests";
+  private final String url = "http://guest-service/guests";
 
   @Autowired
   public AuthenticationServiceImpl(RestTemplate restTemplate,

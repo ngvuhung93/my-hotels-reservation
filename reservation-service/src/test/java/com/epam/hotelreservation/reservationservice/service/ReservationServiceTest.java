@@ -5,12 +5,12 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.when;
 
-import com.epam.hotelreservation.reservationservice.enums.ReservationStatus;
 import com.epam.hotelreservation.reservationservice.exception.ReservationServiceException;
 import com.epam.hotelreservation.reservationservice.mapper.MapStructMapperImpl;
 import com.epam.hotelreservation.reservationservice.model.Reservation;
 import com.epam.hotelreservation.reservationservice.repository.ReservationRepository;
 import com.epam.hotelreservation.reservationservice.request.CreateReservationRequest;
+import enums.ReservationStatus;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Optional;
@@ -76,7 +76,7 @@ class ReservationServiceTest {
 
   @Test
   void shouldReturnReservationConflictWithGivenDates() {
-    
+
     var mockReturnReservationHalfBefore = Reservation.builder()
         .bookedFrom(today.minusDays(3))
         .bookedTo(today.plusDays(1))
@@ -117,18 +117,23 @@ class ReservationServiceTest {
     reservations.add(mockNotReturnCaseWithInvalidCity);
 
     when(reservationRepository.findAll()).thenReturn(reservations);
-    var returnReservations = reservationService.findReservationConflictWithGivenDates(today, today.plusDays(3),CITY);
+    var returnReservations = reservationService
+        .findReservationConflictWithGivenDates(today, today.plusDays(3), CITY);
     assertEquals(4, returnReservations.size());
-    assertEquals(returnReservations.get(0), mapper.mapReservationToReservationDto(mockReturnReservationHalfBefore));
-    assertEquals(returnReservations.get(1), mapper.mapReservationToReservationDto(mockReturnReservationHalfAfter));
-    assertEquals(returnReservations.get(2), mapper.mapReservationToReservationDto(mockReturnReservationOutBound));
-    assertEquals(returnReservations.get(3), mapper.mapReservationToReservationDto(mockReturnReservationInBound));
+    assertEquals(returnReservations.get(0),
+        mapper.mapReservationToReservationDto(mockReturnReservationHalfBefore));
+    assertEquals(returnReservations.get(1),
+        mapper.mapReservationToReservationDto(mockReturnReservationHalfAfter));
+    assertEquals(returnReservations.get(2),
+        mapper.mapReservationToReservationDto(mockReturnReservationOutBound));
+    assertEquals(returnReservations.get(3),
+        mapper.mapReservationToReservationDto(mockReturnReservationInBound));
   }
 
   @Test
   void shouldThrowException_WhenReceiveInvalidTimeFrame() {
     assertThrows(ReservationServiceException.class,
-        () -> reservationService.findReservationConflictWithGivenDates(today,today,CITY));
+        () -> reservationService.findReservationConflictWithGivenDates(today, today, CITY));
   }
 
   private Reservation initMockReservation() {

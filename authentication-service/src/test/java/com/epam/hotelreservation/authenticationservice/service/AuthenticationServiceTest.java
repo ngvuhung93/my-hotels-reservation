@@ -31,7 +31,6 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@TestPropertySource("classpath:application-test.yml")
 @ExtendWith(MockitoExtension.class)
 class AuthenticationServiceTest {
 
