@@ -8,6 +8,6 @@ spring:
     config:
       server:
         git:
-          uri: https://github.com/Tada-0709/spring-config-server
+          uri: https://github.com/ngvuhung93/spring-config-server.git
           clone-on-start: true
 
